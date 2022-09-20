@@ -16,14 +16,14 @@ import {
     const run = useSelector( state => state.runReducer)
     const dispatch = useDispatch();
 
-    const handleClickMood = (value) => {
+    const handleClick = (value) => {
       dispatch(setRunItem(value, type))
     }
 
     const renderRunType = ({item}) => {
       const isSelected = run[name] === item.id;
       return (
-        <Pressable onPress={() => handleClickMood(item.id)} >
+        <Pressable onPress={() => handleClick(item.id)} >
         <Badge rounded="12" bg={isSelected ? mood.color: "#fdfdfd"} alignSelf="center" m={2} >
           <Text color={isSelected ? "#fdfdfd" : mood.color} style={{  flexShrink: 1, flexWrap: "wrap" }} >
             <FontAwesome name={item.icon} size={15} color={isSelected ? "#fdfdfd" : mood.color}/>  {item.name}

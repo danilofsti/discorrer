@@ -18,7 +18,7 @@ export const Details = ({ route, navigation}) => {
   const renderLists = ({item}) => {
     if(item.isMulti){
       return (
-        <MultiSelect title={item.title} items={item.list} size={item.listSize} mood={mood} />
+        <MultiSelect title={item.title} list={item.list} size={item.listSize} mood={mood} type={item.type} name={item.name} />
       )
     } else {
       return (

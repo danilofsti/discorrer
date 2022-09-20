@@ -1,6 +1,9 @@
 export const SET_RUN_MOOD = 'SET_RUN_MOOD';
 export const SET_RUN_TYPE = 'SET_RUN_TYPE';
 export const SET_RUN_WHERE = 'SET_RUN_WHERE';
+export const SET_RUN_PRE = 'SET_RUN_PRE';
+export const SET_RUN_DURING = 'SET_RUN_DURING';
+export const SET_RUN_POST = 'SET_RUN_POST';
 
 export const setRunMood = mood => dispatch => {
   dispatch({
@@ -14,5 +17,5 @@ export const setRunItem = (item, type) => dispatch => {
     type: type,
     payload: item
   })
-}
+} 
 

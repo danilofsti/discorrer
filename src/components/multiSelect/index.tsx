@@ -9,26 +9,23 @@ import {
   import React, { useEffect } from 'react';
   import FontAwesome from 'react-native-vector-icons/FontAwesome5';
   import { Pressable } from 'react-native';
+  import { useSelector, useDispatch } from 'react-redux'
+  import { setRunItem } from '../../redux/actions';
   
-  export const MultiSelect = ({ mood, items, title, size }) => {
-    const [select, setSelect] = React.useState<string[]>([]);
-    const handleSelect = (value) => {
-      setSelect((prevState) => {
-        const index = prevState.indexOf(value)
-        if(index> -1){
-          prevState.splice(index, 1)
-        }else {
-          prevState.push(value)
-        }
-        return [...prevState]
-      })
+  export const MultiSelect = ({ mood, list, title, size, type, name }) => {
+    const run = useSelector( state => state.runReducer)
+    const dispatch = useDispatch();
+
+    const handleClickMood = (value) => {
+      dispatch(setRunItem(value, type))
+      console.log(run)
     }
 
     const renderRunType = ({item}) => {
-      const colorBadge = select.indexOf(item.id) > -1 ? mood.color: "#fdfdfd"
-      const colorText = select.indexOf(item.id) > -1 ? "#fdfdfd" : mood.color
+      const colorBadge = run[name].indexOf(item.id) > -1 ? mood.color: "#fdfdfd"
+      const colorText = run[name].indexOf(item.id) > -1 ? "#fdfdfd" : mood.color
       return (
-        <Pressable onPress={() => handleSelect(item.id)} >
+        <Pressable onPress={() => handleClickMood(item.id)} >
         <Badge rounded="12" bg={colorBadge} alignSelf="center" m={2} >
           <Text color={colorText} style={{  flexShrink: 1, flexWrap: "wrap" }} >
             <FontAwesome name={item.icon} size={15} color={colorText}/>  {item.name}
@@ -51,11 +48,11 @@ import {
               {title}
             </Heading>
             <FlatList
-              data={items}
-              keyExtractor={item => item.id}
+              data={list}
+              keyExtractor={i => i.id}
               numColumns={size} 
               renderItem={renderRunType}
-              extraData={select}
+              extraData={run[name]}
             />
           </Stack>
         </Stack>
