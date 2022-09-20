@@ -9,13 +9,21 @@ import {
   import React from 'react';
   import FontAwesome from 'react-native-vector-icons/FontAwesome5';
   import { Pressable } from 'react-native';
+  import { useSelector, useDispatch } from 'react-redux'
+  import { setRunItem } from '../../redux/actions';
   
-  export const MonoSelect = ({ mood, items, title, size }) => {
-    const [type, setType] = React.useState("");
+  export const MonoSelect = ({ mood, list, title, size, type, name }) => {
+    const run = useSelector( state => state.runReducer)
+    const dispatch = useDispatch();
+
+    const handleClickMood = (value) => {
+      dispatch(setRunItem(value, type))
+    }
+
     const renderRunType = ({item}) => {
-      const isSelected = type === item.id;
+      const isSelected = run[name] === item.id;
       return (
-        <Pressable onPress={() => setType(item.id)} >
+        <Pressable onPress={() => handleClickMood(item.id)} >
         <Badge rounded="12" bg={isSelected ? mood.color: "#fdfdfd"} alignSelf="center" m={2} >
           <Text color={isSelected ? "#fdfdfd" : mood.color} style={{  flexShrink: 1, flexWrap: "wrap" }} >
             <FontAwesome name={item.icon} size={15} color={isSelected ? "#fdfdfd" : mood.color}/>  {item.name}
@@ -37,8 +45,8 @@ import {
               {title}
             </Heading>
             <FlatList
-              data={items}
-              keyExtractor={item => item.id}
+              data={list}
+              keyExtractor={i => i.id}
               numColumns={size} 
               renderItem={renderRunType}
             />

@@ -1,3 +1,4 @@
+import { SET_RUN_TYPE, SET_RUN_WHERE } from "../redux/actions"
 export const TYPE= [
     {
       id:"run",
@@ -42,7 +43,6 @@ export const WHERE= [
       name:"Track"
     }
   ]
-
 export const PRE= 
 [
     {
@@ -66,8 +66,6 @@ export const PRE=
       name:"Track"
     }
   ]
-
-
 export const DURING= 
 [
     {
@@ -91,8 +89,6 @@ export const DURING=
       name:"Track"
     }
   ]
-
-  
 export const POST= 
 [
     {
@@ -116,37 +112,45 @@ export const POST=
       name:"Track"
     }
   ]
-
-
 export const TAG_LIST = [
     {
       title: "Qual foi o tipo do treino?",
       isMulti: false,
       listSize:2,
+      type: SET_RUN_TYPE,
+      name: 'type',
       list: TYPE
     },
     {
       title:"Onde você corre?",
       isMulti: false,
       listSize:3,
+      type: SET_RUN_WHERE,
+      name: 'where',
       list: WHERE
     },
     {
       title:"O que aconteceu antes do treino?",
       isMulti: true,
       listSize:3,
+      type: '',
+      name: 'pre',
       list: PRE
     },
     {
       title:"E durante?",
       isMulti: true,
       listSize:3,
+      type: '',
+      name: 'during',
       list: DURING
     },
     {
       title:"O que você fez após correr?",
       isMulti: true,
       listSize:3,
+      type: '',
+      name: 'post',
       list: POST
     }
   ]

@@ -1,5 +1,7 @@
 import { extendTheme, NativeBaseProvider, StatusBar} from 'native-base';
 import { Routes } from './src/components/routes';
+import { Provider } from 'react-redux'
+import  store  from './src/redux/store'
 
 export default function App() {
   const theme = extendTheme({
@@ -23,9 +25,11 @@ export default function App() {
     }
   });
   return (
+    <Provider store={store} >
     <NativeBaseProvider theme={theme}>
       <StatusBar barStyle='dark-content'/>
       <Routes/>
     </NativeBaseProvider>
+    </Provider>
   );
 }

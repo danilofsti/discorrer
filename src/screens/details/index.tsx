@@ -8,10 +8,12 @@ import React from 'react';
 import { MonoSelect } from '../../components/monoSelect';
 import { MultiSelect } from '../../components/multiSelect';
 import { TAG_LIST } from '../../enum/tags';
+import { useSelector, useDispatch } from 'react-redux'
+
 
 
 export const Details = ({ route, navigation}) => {
-  const {mood} = route.params;
+  const mood = route.params.mood;
 
   const renderLists = ({item}) => {
     if(item.isMulti){
@@ -20,7 +22,7 @@ export const Details = ({ route, navigation}) => {
       )
     } else {
       return (
-        <MonoSelect title={item.title} items={item.list} size={item.listSize}  mood={mood} />
+        <MonoSelect title={item.title} list={item.list} size={item.listSize}  mood={mood} type={item.type} name={item.name} />
       )
     }
   }

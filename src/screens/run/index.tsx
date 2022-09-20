@@ -4,19 +4,27 @@ import {
   KeyboardAvoidingView,
   HStack,
   Spacer,
-  Text,
-  Badge,
   IconButton
 } from 'native-base';
 import React from 'react';
 import { Moods } from '../../enum/moods';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import FontAwesome from 'react-native-vector-icons/FontAwesome5';
+import { useSelector, useDispatch } from 'react-redux'
+import { setRunMood } from '../../redux/actions';
 
 const {great, good, meh, bad, mad} = Moods
 const moodList = [great, good, meh, bad, mad] 
 
+
 export const Run = ({ navigation }) => {
+  const {mood} = useSelector( state => state.runReducer)
+  const dispatch = useDispatch();
+
+  const handleClickMood = (value) => {
+    dispatch(setRunMood(value.id))
+    navigation.navigate('Details', {mood:value})
+  }
+
   return (
     <KeyboardAvoidingView>
       <Box bg="white" shadow={4} py="4" px="5" borderRadius="5" rounded="md" m={3} height="95%">
@@ -37,7 +45,7 @@ export const Run = ({ navigation }) => {
                           size:"5xl",
                           color:item.color
                         }}
-                        onPress={() => navigation.navigate('Details', {mood:item})}
+                        onPress={() => handleClickMood(item)}
                       />)
             })
           }
