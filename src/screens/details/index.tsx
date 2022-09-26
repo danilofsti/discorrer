@@ -30,7 +30,7 @@ export const Details = ({ route, navigation}) => {
     <KeyboardAvoidingView>
       <Box bg="white" shadow={4} py="4" px="5" borderRadius="5" rounded="md" m={3} height="95%">
         <Heading fontWeight="light">
-          O que você tem feito?
+          Como foi ...
         </Heading>
         <FlatList
           data={TAG_LIST}

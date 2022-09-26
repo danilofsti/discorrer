@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Home } from '../../screens/home'
 import { Charts } from '../../screens/charts'
 import { IconButton } from 'native-base';
+import { Search } from '../../screens/search';
 
 export type BottomTabParamList = {
   Home: undefined;
@@ -49,11 +50,7 @@ export const Menu = () => {
             title: 'Gráficos',
           }}
         />
-        <Tab.Group
-        screenOptions={({ navigation }) => ({
-          headerRight: () => <IconButton onPress={() => navigation.navigate('Run')} title='nova corrida'><Ionicons name='ios-add-circle' size={20} color='#377971'/></IconButton>,
-        })}
-        >
+        <Tab.Group>
           <Tab.Screen 
             name="Home" 
             component={Home} 
@@ -64,7 +61,7 @@ export const Menu = () => {
         </Tab.Group>
         <Tab.Screen 
           name="Search" 
-          component={Home} 
+          component={Search} 
           options={{
             title: 'Busca',
           }}

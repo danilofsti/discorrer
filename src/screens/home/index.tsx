@@ -8,6 +8,7 @@ import {
 import React from 'react';
 import { Run } from '../../components/run';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
+import { Pressable } from 'react-native';
 
 const items =  [{
   id:1,
@@ -103,8 +104,16 @@ const items =  [{
 }]
 
 export const Home = ({ navigation }) => {
+  const handleClickCardRun = (item) => {
+
+  }
+  
   const renderRun = ({item}) => {
-    return <Run run={item}/>
+    return (
+      <Pressable onPress={() => navigation.navigate('Run')} >
+        <Run run={item}/>
+      </Pressable>
+    )
   }
   return (
     <Box flex="1" >

@@ -32,7 +32,7 @@ export const SigIn = ({ navigation }) => {
           <Heading mt="1" _dark={{
           color: "warmGray.200"
         }} color="coolGray.600" fontWeight="medium" size="xs">
-            Welcome, sign in to continue!
+            Bem-vindo, faça o login para continuar!
           </Heading>
 
           <VStack space={3} mt="5">

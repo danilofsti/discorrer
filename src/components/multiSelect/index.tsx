@@ -11,6 +11,7 @@ import {
   import { Pressable } from 'react-native';
   import { useSelector, useDispatch } from 'react-redux'
   import { setRunItem } from '../../redux/actions';
+  import { TAGS } from '../../enum/tags';
   
   export const MultiSelect = ({ mood, list, title, size, type, name }) => {
     const run = useSelector( state => state.runReducer)
@@ -18,17 +19,17 @@ import {
 
     const handleClickMood = (value) => {
       dispatch(setRunItem(value, type))
-      console.log(run)
     }
 
     const renderRunType = ({item}) => {
-      const colorBadge = run[name].indexOf(item.id) > -1 ? mood.color: "#fdfdfd"
-      const colorText = run[name].indexOf(item.id) > -1 ? "#fdfdfd" : mood.color
+      const tag = TAGS[item]
+      const colorBadge = run[name].indexOf(tag.id) > -1 ? mood.color: "#fdfdfd"
+      const colorText = run[name].indexOf(tag.id) > -1 ? "#fdfdfd" : mood.color
       return (
-        <Pressable onPress={() => handleClickMood(item.id)} >
+        <Pressable onPress={() => handleClickMood(tag.id)} >
         <Badge rounded="12" bg={colorBadge} alignSelf="center" m={2} >
           <Text color={colorText} style={{  flexShrink: 1, flexWrap: "wrap" }} >
-            <FontAwesome name={item.icon} size={15} color={colorText}/>  {item.name}
+            <FontAwesome name={tag.icon} size={15} color={colorText}/>  {tag.name}
           </Text>
         </Badge>
         </Pressable>
@@ -49,7 +50,7 @@ import {
             </Heading>
             <FlatList
               data={list}
-              keyExtractor={i => i.id}
+              keyExtractor={i => i}
               numColumns={size} 
               renderItem={renderRunType}
               extraData={run[name]}

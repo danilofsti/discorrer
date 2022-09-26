@@ -4,16 +4,16 @@ import {
   KeyboardAvoidingView,
   HStack,
   Spacer,
-  IconButton
+  IconButton,
+  FlatList,
+  Badge
 } from 'native-base';
 import React from 'react';
-import { Moods } from '../../enum/moods';
+import { MOODS, moodList } from '../../enum/moods';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { useSelector, useDispatch } from 'react-redux'
 import { setRunMood } from '../../redux/actions';
-
-const {great, good, meh, bad, mad} = Moods
-const moodList = [great, good, meh, bad, mad] 
+import { Pressable } from 'react-native';
 
 
 export const Run = ({ navigation }) => {
@@ -21,8 +21,21 @@ export const Run = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const handleClickMood = (value) => {
-    dispatch(setRunMood(value.id))
+    dispatch(setRunMood(value.name))
     navigation.navigate('Details', {mood:value})
+  }
+
+  const renderMood = ({item}) => {
+    const colorBg = mood.indexOf(MOODS[item].name) > -1 ? MOODS[item].color: "#ffffff"
+    const colorIcon = mood.indexOf(MOODS[item].name) > -1 ? "#fdfdfd" : MOODS[item].color
+
+    return (
+      <Pressable onPress={() => handleClickMood(MOODS[item])} >
+        <Badge rounded="full" bg={colorBg}>
+          <Fontisto name={MOODS[item].icon} size={43} color={colorIcon}/>
+        </Badge>
+      </Pressable>
+    )
   }
 
   return (
@@ -32,23 +45,12 @@ export const Run = ({ navigation }) => {
           Como você se sentiu em sua nesta corrida?
         </Heading>
         <Spacer/>
-        <HStack space={2} justifyContent="space-between" >
-          {
-            moodList.map(item => {
-              return (<IconButton 
-                        key={item.id}
-                        size={50} 
-                        variant="ghost" 
-                        _icon={{
-                          as: Fontisto,
-                          name: item.icon,
-                          size:"5xl",
-                          color:item.color
-                        }}
-                        onPress={() => handleClickMood(item)}
-                      />)
-            })
-          }
+        <HStack justifyContent="space-between" >
+          <FlatList data={moodList} 
+            keyExtractor={item => item.name}
+            numColumns={5} 
+            renderItem={renderMood}
+          />
         </HStack>
         <Spacer/>
       </Box>
