@@ -1,17 +1,14 @@
 import { 
     Box,
     Heading,
-    Text,
-    Badge,
     FlatList,
     Stack
   } from 'native-base';
 import React from 'react';
-import FontAwesome from 'react-native-vector-icons/FontAwesome5';
-import { Pressable } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux'
 import { setRunItem } from '../../redux/actions';
 import { TAGS } from '../../enum/tags';
+import { Tag } from '../tag';
 
   
 export const MonoSelect = ({ mood, list, title, size, type, name }) => {
@@ -25,14 +22,10 @@ export const MonoSelect = ({ mood, list, title, size, type, name }) => {
   const renderRunType = ({item}) => {
     const tag = TAGS[item]
     const isSelected = run[name] === tag.id;
+    const collorBadge = isSelected ? mood.color: "#fdfdfd"
+    const collorText = isSelected? "#fdfdfd" : mood.color    
     return (
-      <Pressable onPress={() => handleClick(tag.id)} >
-      <Badge rounded="12" bg={isSelected ? mood.color: "#fdfdfd"} alignSelf="center" m={2} >
-        <Text color={isSelected ? "#fdfdfd" : mood.color} style={{  flexShrink: 1, flexWrap: "wrap" }} >
-          <FontAwesome name={tag.icon} size={15} color={isSelected ? "#fdfdfd" : mood.color}/>  {tag.name}
-        </Text>
-      </Badge>
-      </Pressable>
+      <Tag tag={TAGS[item]} collorBadge={collorBadge} collorText={collorText} handleClick={handleClick}/>
     )
   }
   return (

@@ -1,16 +1,36 @@
-import { SET_RUN_MOOD, SET_RUN_TYPE, SET_RUN_WHERE, SET_RUN_PRE, SET_RUN_DURING, SET_RUN_POST } from './actions'
+import { NEW_RUN, SET_RUN_MOOD, 
+         SET_RUN_TYPE, SET_RUN_WHERE, 
+         SET_RUN_PRE, SET_RUN_DURING, 
+         SET_RUN_POST, EDIT_RUN, 
+         SAVE_RUN, GET_RUNS 
+} from './actions'
 
-const initialState = {
+export const initialRunState = {
+  name : "",
+  distance : {},
+  elapsed_time : {},
+  start_date_local : new Date(),
+  is_imported: false,
+  calories : {},
   mood: '',
   type: '',
   where: '',
   pre: [],
   during: [],
-  post: []
+  post: [],
+  jornal:''
 }
 
-export const runReducer  = ( state = initialState, action )  => {
+const initialCollection = []
+
+export const runReducer  = ( state = initialRunState, action )  => {
   switch (action.type) {
+    case NEW_RUN: 
+      return action.payload;
+    case EDIT_RUN: 
+      return {...action.payload};
+    case SET_RUN_MOOD:
+      return {...state, ...action.payload };
     case SET_RUN_MOOD:
       return {...state, mood: action.payload };
     case SET_RUN_TYPE:
@@ -23,10 +43,22 @@ export const runReducer  = ( state = initialState, action )  => {
       return {...state, during: setMultiItem(action.payload, state.during)  };
     case SET_RUN_POST:
       return {...state, post: setMultiItem(action.payload, state.post)  };
+    case SAVE_RUN:
+      return action.payload;
     default:
       return state;
   }
 }
+
+export const allRunReducer = ( state = initialCollection, action )  => {
+  switch (action.type) {
+    case GET_RUNS: 
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 
 const setMultiItem = (value, prev) => {
   const newList = [...prev]

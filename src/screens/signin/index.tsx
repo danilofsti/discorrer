@@ -41,6 +41,7 @@ export const SigIn = ({ navigation }) => {
               <Input
                 InputLeftElement={<Icon as={<MaterialIcons name="person" />} size={5} ml="2" color="muted.400" />} 
                 placeholder="seu@email.com" 
+                variant="underlined"
               />
             </FormControl>
             <FormControl>
@@ -52,6 +53,7 @@ export const SigIn = ({ navigation }) => {
                 </Pressable>} 
                 InputLeftElement={<Icon as={<MaterialIcons name="lock" />} size={5} ml="2" color="muted.400" />} 
                 placeholder="********" 
+                variant="underlined"
               />
 
             </FormControl>

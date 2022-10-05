@@ -2,17 +2,21 @@ import {
   Box,
   Heading,
   KeyboardAvoidingView,
-  FlatList
+  FlatList,
+  Button,
 } from 'native-base';
 import React from 'react';
 import { MonoSelect } from '../../components/monoSelect';
 import { MultiSelect } from '../../components/multiSelect';
 import { TAG_LIST } from '../../enum/tags';
 import { useSelector, useDispatch } from 'react-redux'
+import { apiCreateRun, apiGetAllRuns, apiUpdateRun } from '../../services/apiService';
 
 
 
 export const Details = ({ route, navigation}) => {
+  const dispatch = useDispatch();
+  const run = useSelector( state => state.runReducer)
   const mood = route.params.mood;
 
   const renderLists = ({item}) => {
@@ -26,6 +30,30 @@ export const Details = ({ route, navigation}) => {
       )
     }
   }
+
+  const handleSubmit = async () => {
+    delete run.id
+    let newrun;
+    if(run._id){
+      newrun = await apiUpdateRun(JSON.stringify(run))
+    } else {
+      newrun = await apiCreateRun(JSON.stringify(run))
+    }
+    navigation.navigate('TabBar')
+  }
+
+  const buttonSubmit = () => {  
+    return (
+      <Button 
+        mt="2" 
+        colorScheme="blueGray"
+        background={mood.color}
+        onPress={handleSubmit}
+      >
+        SUBMIT
+      </Button>
+    )
+  }
   return (
     <KeyboardAvoidingView>
       <Box bg="white" shadow={4} py="4" px="5" borderRadius="5" rounded="md" m={3} height="95%">
@@ -37,7 +65,7 @@ export const Details = ({ route, navigation}) => {
           keyExtractor={item => item.title}
           numColumns={1} 
           renderItem={renderLists}
-        />
+          ListFooterComponent={buttonSubmit} />
       </Box>
     </KeyboardAvoidingView>
   );

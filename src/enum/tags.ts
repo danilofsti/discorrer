@@ -77,7 +77,7 @@ export const TAGS = {
     name:"Carb Load"
   },
   friend:{
-    id:"user-friend",
+    id:"friend",
     icon:"user-friends",
     name:"Viu Amigos"
   },
@@ -146,7 +146,7 @@ export const TAGS = {
     icon:"city",
     name:"Cidade"
   },
-  hot:{
+  sun:{
     id:"sun",
     icon:"sun",
     name: "Quente"
@@ -218,7 +218,7 @@ export const PRE= [
   "energic"
 ]
 export const DURING= [
-  "solo", "group", "park","city", "hot", "wind", "cold",  "nice", "music", "guided", "indoor", "tshirt", "shoes", "pain"
+  "solo", "group", "park","city", "sun", "wind", "cold",  "nice", "music", "guided", "indoor", "tshirt", "shoes", "pain"
 ]
 export const POST= [
   "trail"

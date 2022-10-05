@@ -5,126 +5,92 @@ import {
   Icon,
   Fab
 } from 'native-base';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Run } from '../../components/run';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
-import { Pressable } from 'react-native';
+import { Pressable, RefreshControl } from 'react-native';
+import { apiGetAllRuns } from '../../services/apiService';
+import { getAllRuns, editRun, newRun } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
-const items =  [{
-  id:1,
-  title:'Long Run', 
-  day:'Today', 
-  hour:'9PM', 
-  distance:'5,09', 
-  pace:`6'09"`, 
-  time:'00:30:20',
-  mood:'great',
-  type: {
-   icon: "map",
-   name: "long"
-  },
-  tags: [
-  ]
-},
- {
-  id:2,
-  title:'Just a Run', 
-  day:'02/09/2022', 
-  hour:'9PM', 
-  distance:'3,00', 
-  pace:`6'00"`, 
-  time:'00:15:00',
-  mood:'mad',
-  type: {
-   icon: "running",
-   name: "regeneration"
-  },
-  tags: [
-    { id: "00", icon: "spa", name:"Chuva" },
-  ]
-},
-{
-  id:3,
- title:'Run in a trail', 
- day:'02/09/2022', 
- hour:'9PM', 
- distance:'3,00', 
- pace:`6'00"`, 
- time:'00:15:00',
- mood:'good',
- type: {
-  icon: "hiking",
-  name: "trail"
- },
- tags: [
-   { id: "00", icon: "heartbeat", name:"Chuva" },
-   { id: "01", icon: "running", name:"Em Grupo" },
-   { id: "00", icon: "hiking", name:"Chuva" },
-   { id: "01", icon: "user-friends", name:"Em Grupo" },
-   { id: "00", icon: "bicycle", name:"Chuva" },
-   { id: "01", icon: "heart-broken", name:"Em Grupo" }
- ]
-},
-{
-  id:4,
- title:'Méh Race', 
- day:'02/09/2022', 
- hour:'9PM', 
- distance:'3,00', 
- pace:`6'00"`, 
- time:'00:15:00',
- mood:'meh',
- type: {
-  icon: "flag-checkered",
-  name: "race"
- },
- tags: [
-   { id: "00", icon: "wine-glass-alt", name:"Chuva" },
-   { id: "01", icon: "stopwatch", name:"Em Grupo" },
- ]
-},
-{
-  id:5,
- title:'Méh Speed Run', 
- day:'02/09/2022', 
- hour:'9PM', 
- distance:'3,00', 
- pace:`6'00"`, 
- time:'00:15:00', 
- mood: 'bad',
- type: {
-  icon: "stopwatch",
-  name: "speed"
- },
- tags: [
-   { id: "00", icon: "flag-checkered", name:"Chuva" },
-   { id: "01", icon: "tint", name:"Em Grupo" },
-   { id: "00", icon: "apple-alt", name:"Chuva" }
- ]
-}]
 
 export const Home = ({ navigation }) => {
-  const handleClickCardRun = (item) => {
+  // Back End
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [run,runs] = useSelector( state => [state.runReducer,state.allRunReducer] )
+  const dispatch = useDispatch();
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => {
+      apiGetAllRuns().then((apiAllRuns) => {
+        dispatch(getAllRuns(apiAllRuns))
+      })
+    });
+    
+  }, []);
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
   }
+
+  const initialRunState = {
+    name : "",
+    distance : 0,
+    elapsed_time : 0,
+    start_date_local : new Date(),
+    is_imported: false,
+    calories : 0.0,
+    mood: '',
+    type: '',
+    where: '',
+    pre: [],
+    during: [],
+    post: [],
+    jornal:''
+  }
+  
+  const handleClickNew = () => {
+    dispatch(newRun(initialRunState))
+    navigation.navigate('Run')
+  }
+
+  const handleClickEdit= (item) => {
+    dispatch(editRun(item))
+    navigation.navigate('Run')
+  }
+
+  useEffect(() => {
+    // Promise
+    apiGetAllRuns().then((apiAllRuns) => {
+      dispatch(getAllRuns(apiAllRuns))
+    })
+  }, [runs]);
   
   const renderRun = ({item}) => {
     return (
-      <Pressable onPress={() => navigation.navigate('Run')} >
+      <Pressable onPress={() => handleClickEdit(item)} >
         <Run run={item}/>
       </Pressable>
     )
   }
+  
   return (
     <Box flex="1" >
       <KeyboardAvoidingView>
         <FlatList
-          data={items}
-          keyExtractor={item => item.id.toString()}
+          data={runs}
+          keyExtractor={item => item._id}
           numColumns={1} 
           renderItem={renderRun}
+          size="full"
+          refreshControl = {
+            <RefreshControl 
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            />
+          }
         />
-        <Fab renderInPortal={false} shadow={2} size="sm" bg="#377971" icon={<Icon color="white" as={FontAwesome} name="plus" size="sm" />}  onPress={() => navigation.navigate('Run')}/>
+        <Fab renderInPortal={false} shadow={2} size="sm" bg="#377971" icon={<Icon color="white" as={FontAwesome} name="plus" size="sm" />}  onPress={() => handleClickNew()}/>
       </KeyboardAvoidingView>
     </Box>
   );
