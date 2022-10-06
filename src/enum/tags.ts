@@ -195,6 +195,36 @@ export const TAGS = {
     id: "shoes",
     icon: "shoe-prints",
     name: "Tenis Confortavel"
+  },
+  water:{
+    id: "water",
+    icon: "faucet",
+    name: "Se Hidratou"
+  },
+  warm:{
+    id: "warm",
+    icon: "fire",
+    name: "Se Aqueceu"
+  },
+  beer:{
+    id: "beer",
+    icon: "beer",
+    name: "Bebeu"
+  },
+  party:{
+    id: "party",
+    icon: "wine-glass",
+    name: "Festejou"
+  },
+  skull:{
+    id: "skull",
+    icon: "skull",
+    name: "Passou Mal"
+  },
+  rest:{
+    id: "rest",
+    icon: "bed",
+    name: "Descansou"
   }
 }
 
@@ -218,13 +248,16 @@ export const PRE= [
   "energic"
 ]
 export const DURING= [
-  "solo", "group", "park","city", "sun", "wind", "cold",  "nice", "music", "guided", "indoor", "tshirt", "shoes", "pain"
+  "solo", "group", "park","city", 
+  "sun", "wind", "cold",  "nice", 
+  "music", "guided", "indoor", "tshirt", 
+  "shoes", "pain"
 ]
+
 export const POST= [
-  "trail"
-  ,"street"
-  ,"inside"
-  ,"track"
+  "water", "warm", "health", "fastfood", "gyn",
+  "sad", "happy", "stress", "tired", "rest",
+  "energic", "beer", "party", "skull", 
 ]
 
 export const TAG_LIST = [
@@ -263,7 +296,7 @@ export const TAG_LIST = [
   {
     title:"... o restante do dia?",
     isMulti: true,
-    listSize:3,
+    listSize:2,
     type: SET_RUN_POST,
     name: 'post',
     list: POST

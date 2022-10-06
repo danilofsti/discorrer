@@ -105,6 +105,7 @@ export const Run = ({ navigation }) => {
             mt={5}
             InputLeftElement={<Icon as={<FontAwesome name="heading" />} size={5} mr="2" color="muted.400" />} 
             placeholder="De um título à corrida" 
+            isRequired
             value={name}
             onChangeText={setName}
           />
@@ -114,6 +115,7 @@ export const Run = ({ navigation }) => {
           h={40} 
           placeholder="Use esse espaço para discorrer sobre as coisas que aconteceram antes, durante e depois de sua corrida que influenciaram o modo como você a percebe"  
           value={jornal}
+          isRequired
           onChangeText={setJornal}
         />
         <FormControl >

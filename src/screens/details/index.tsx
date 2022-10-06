@@ -9,13 +9,12 @@ import React from 'react';
 import { MonoSelect } from '../../components/monoSelect';
 import { MultiSelect } from '../../components/multiSelect';
 import { TAG_LIST } from '../../enum/tags';
-import { useSelector, useDispatch } from 'react-redux'
-import { apiCreateRun, apiGetAllRuns, apiUpdateRun } from '../../services/apiService';
+import { useSelector } from 'react-redux'
+import { apiCreateRun, apiUpdateRun } from '../../services/apiService';
 
 
 
 export const Details = ({ route, navigation}) => {
-  const dispatch = useDispatch();
   const run = useSelector( state => state.runReducer)
   const mood = route.params.mood;
 
@@ -30,7 +29,6 @@ export const Details = ({ route, navigation}) => {
       )
     }
   }
-
   const handleSubmit = async () => {
     delete run.id
     let newrun;
@@ -41,7 +39,6 @@ export const Details = ({ route, navigation}) => {
     }
     navigation.navigate('TabBar')
   }
-
   const buttonSubmit = () => {  
     return (
       <Button 
