@@ -2,7 +2,7 @@ import { NEW_RUN, SET_RUN_MOOD,
          SET_RUN_TYPE, SET_RUN_WHERE, 
          SET_RUN_PRE, SET_RUN_DURING, 
          SET_RUN_POST, EDIT_RUN, 
-         SAVE_RUN, GET_RUNS 
+         SAVE_RUN, GET_RUNS, RELOAD 
 } from './actions'
 
 export const initialRunState = {
@@ -53,6 +53,15 @@ export const runReducer  = ( state = initialRunState, action )  => {
 export const allRunReducer = ( state = initialCollection, action )  => {
   switch (action.type) {
     case GET_RUNS: 
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
+export const reloadReducer = ( state = "edit", action )  => {
+  switch (action.type) {
+    case RELOAD: 
       return action.payload;
     default:
       return state;

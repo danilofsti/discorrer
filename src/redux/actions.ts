@@ -9,6 +9,7 @@ export const SET_RUN_POST = 'SET_RUN_POST';
 export const EDIT_RUN = 'EDIT_RUN';
 export const SAVE_RUN = 'SAVE_RUN';
 export const GET_RUNS = 'GET_RUNS';
+export const RELOAD = 'RELOAD';
 
 export const setRun = run => dispatch => {
   dispatch({
@@ -51,4 +52,11 @@ export const editRun = (item) => dispatch => {
     payload: item
   })
 } 
+
+export const setReload = (value) => dispatch => {
+  dispatch({
+    type: RELOAD,
+    payload: value
+  })
+}
 

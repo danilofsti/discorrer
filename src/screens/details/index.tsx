@@ -9,12 +9,29 @@ import React from 'react';
 import { MonoSelect } from '../../components/monoSelect';
 import { MultiSelect } from '../../components/multiSelect';
 import { TAG_LIST } from '../../enum/tags';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { apiCreateRun, apiUpdateRun } from '../../services/apiService';
+import { setReload } from '../../redux/actions';
 
+const initialRunState = {
+  name : "",
+  distance : 0,
+  elapsed_time : 0,
+  start_date_local : new Date(),
+  is_imported: false,
+  calories : 0.0,
+  mood: '',
+  type: '',
+  where: '',
+  pre: [],
+  during: [],
+  post: [],
+  jornal:''
+}
 
 
 export const Details = ({ route, navigation}) => {
+  const dispatch = useDispatch();
   const run = useSelector( state => state.runReducer)
   const mood = route.params.mood;
 
@@ -37,6 +54,7 @@ export const Details = ({ route, navigation}) => {
     } else {
       newrun = await apiCreateRun(JSON.stringify(run))
     }
+    dispatch(setReload('update'))
     navigation.navigate('TabBar')
   }
   const buttonSubmit = () => {  

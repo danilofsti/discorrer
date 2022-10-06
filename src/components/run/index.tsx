@@ -3,7 +3,8 @@ import {
   Box,
   VStack,
   Text,
-  FlatList
+  FlatList,
+  TextArea
 } from 'native-base';
 import React from 'react';
 import { MOODS } from '../../enum/moods';
@@ -13,8 +14,8 @@ import { formatTimeFromSeconds, formatDate, formatPace, formatTimeFromDate, form
 import Ionicons from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 
-export const Run = ({run}) => {
-  const {name, start_date_local, distance, elapsed_time, mood, type, where} = run
+export const Run = ({run, showDetail = false}) => {
+  const {name, start_date_local, distance, elapsed_time, mood, type, where, jornal} = run
 
 
   const time = formatTimeFromSeconds(elapsed_time);
@@ -36,7 +37,7 @@ export const Run = ({run}) => {
   return (
   <Box bg="white" shadow={4} py="4" px="5" borderRadius="5" rounded="md" m={3}>
     <HStack justifyContent="space-between">
-      <Box justifyContent="space-between">
+      <Box justifyContent="space-between" maxW="200" >
         <VStack space="1">
           <Text fontSize="xs" color="coolGray.500">
             {day} @ {hour}
@@ -55,6 +56,9 @@ export const Run = ({run}) => {
               <Text color="coolGray.400">Ritmo</Text>  {pace}
             </Text>
           </HStack>
+          {showDetail? 
+            <Text fontSize="sm" maxW="200" color="coolGray.400">{jornal}</Text>:''
+          }
           <FlatList data={tags}
             keyExtractor={item => item}
             numColumns={3} 
